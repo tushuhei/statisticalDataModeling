@@ -1,0 +1,14 @@
+model
+{
+	Tau.noninformative <- 1.0E-3;
+	P.gamma <- 1.0E-3;
+	for (i in 1:N) {
+		Positive[i] ~ dbin(p[i], Total[i]);
+		logit(p[i]) <- logit.p[i];
+		logit.p[i] ~ dnorm(m[i], tau);
+		m[i] <- beta[1] + beta[2] * Logdose[i];
+	}
+	beta[1] ~ dnorm(0.0, Tau.noninformative);
+	beta[2] ~ dnorm(0.0, Tau.noninformative);
+	tau ~ dgamma(P.gamma, P.gamma);
+}

@@ -1,0 +1,10 @@
+model
+{
+    Tau.noninformative <- 1.0E-4;
+    for (i in 1:N) {
+        Y[i] ~ dpois(lambda[i]);
+        log(lambda[i]) <- beta1 + beta2 * (X[i] - Mean.X);
+    }
+    beta1 ~ dnorm(0, Tau.noninformative);
+    beta2 ~ dnorm(0, Tau.noninformative);
+}
