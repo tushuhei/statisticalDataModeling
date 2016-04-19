@@ -1,0 +1,11 @@
+model
+{
+    for (j in 1:N.site) {
+        Y[j] = dpois(mean[j]);
+        log(mean[j]) <- beta + r[j];
+    }
+    r[1:N.site] ~ car.normal(Adj[], Weights[], Num[], tau);
+    beta ~ dnorm(0, 1.0E-4);
+    tau <- 1 / (s * s);
+    s ~ dunif(0, 1.0E+4);
+}
