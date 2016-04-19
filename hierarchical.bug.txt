@@ -1,0 +1,16 @@
+model
+{
+    for (i in 1:N) {
+        Y[i] ~ dbin(q[i], 8);
+        logit(q[i]) <- beta + r[i];
+    }
+    
+    beta ~ dnorm(0, 1.0E-4);
+    
+    for (i in 1:N) {
+        r[i] ~ dnorm(0, tau);
+    }
+    
+    tau <- 1 / (s * s);
+    s ~ dunif(0, 1.0E+4);
+}

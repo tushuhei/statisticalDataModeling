@@ -1,0 +1,19 @@
+model
+{
+    for (i in 1:N.sample) {
+        Y[i] ~ dpois(lambda[i]);
+        log(lambda[i]) <- beta1 + beta2 * F[i] + r[i] + rp[Pot[i]];
+    }
+    beta1 ~ dnorm(0, 1.0E-4);
+    beta2 ~ dnorm(0, 1.0E-4);
+    for (i in 1:N.sample) {
+        r[i] ~ dnorm(0, tau[1]);
+    }
+    for (j in 1:N.pot) {
+        rp[j] ~ dnorm(0, tau[2]);
+    }
+    for (k in 1:N.tau) {
+        tau[k] <- 1.0 / (s[k] * s[k]);
+        s[k] ~ dunif(0, 1.0E+4);
+    }
+}
